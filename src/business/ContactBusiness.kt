@@ -5,7 +5,7 @@ import repository.ContactRepository
 
 class ContactBusiness {
 
-    fun validate(name: String, phone: String) {
+    private fun validate(name: String, phone: String) {
         if (name == "") {
             throw Exception("Name is required.")
         }
@@ -14,7 +14,7 @@ class ContactBusiness {
         }
     }
 
-    fun validateDelete(name: String, phone: String) {
+    private fun validateDelete(name: String, phone: String) {
         if (name == "" || phone == "") {
             throw Exception("You must select a contact before removing.")
         }
@@ -34,4 +34,7 @@ class ContactBusiness {
         ContactRepository.delete(contact)
     }
 
+    fun getList(): List<ContactEntity> {
+        return ContactRepository.getList()
+    }
 }
