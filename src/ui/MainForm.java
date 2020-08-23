@@ -4,6 +4,7 @@ import business.ContactBusiness;
 import entity.ContactEntity;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,6 +15,7 @@ public class MainForm extends JFrame {
     private JButton buttonNewContact;
     private JButton buttonRemove;
     private JTable tableContacts;
+    private JLabel labelContactCount;
 
     private ContactBusiness mContactBusiness;
 
@@ -54,6 +56,23 @@ public class MainForm extends JFrame {
 
     private void loadContacts() {
         List<ContactEntity> contactList = mContactBusiness.getList();
+
+        String[] columnNames = {"Name", "Phones"};
+        DefaultTableModel model = new DefaultTableModel(new Object[0][0], columnNames);
+
+        for (ContactEntity contact : contactList) {
+            Object[] object = new Object[2];
+
+            object[0] = contact.getName();
+            object[1] = contact.getPhone();
+
+            model.addRow(object);
+        }
+
+        tableContacts.clearSelection();
+        tableContacts.setModel(model);
+
+        labelContactCount.setText(mContactBusiness.getContactCountDescription());
     }
 
 }
